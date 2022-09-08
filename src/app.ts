@@ -1,14 +1,15 @@
 import express, { Application, Request, Response, NextFunction } from 'express'
+import bodyParser from 'body-parser'
+import responseTime from 'response-time'
 import { Logger } from 'winston'
 import winston from './winston'
 import queue, { readQueue } from './queue'
 import config from './config'
 
-const httpLoggerMiddleware = (logger: Logger) => (req: Request, res: Response, next: NextFunction) => {
-    const log = `${req.method} ${req.url} ${res.statusCode}`
+const httpLoggerMiddleware = (logger: Logger) => responseTime((req: Request, res: Response, time: number) => {
+    const log = `${Math.ceil(time)}ms ${req.method} ${req.url} ${res.statusCode}`
     logger.info(log)
-    next()
-}
+})
 
 const logger = winston('app')
 logger.info(`Starting service`)
