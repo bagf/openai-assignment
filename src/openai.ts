@@ -1,5 +1,6 @@
 import { BehaviorSubject, Observable, take, map, filter, throttleTime } from 'rxjs'
-import { Configuration, OpenAIApi } from 'openai'
+import { Configuration, CreateCompletionRequest, CreateCompletionResponse, OpenAIApi } from 'openai'
+import { AxiosRequestConfig, AxiosResponse } from 'axios'
 import winston from './winston'
 import { outgoingQueue, Status, incomingQueue } from './queue'
 import config from './config'

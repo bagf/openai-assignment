@@ -5,7 +5,7 @@ import { Logger } from 'winston'
 import winston from './winston'
 import queue, { readQueue, incomingQueue, pendingQueueSize, Status } from './queue'
 import config from './config'
-import memoryDatabase, { entryOrNull } from './persistance'
+import memoryDatabase, { entryOrNull, readMemoryDatabase } from './persistance'
 import { str as crc32 } from 'crc-32'
 import openai from './openai'
 import shutdown from './shutdown'
@@ -30,6 +30,7 @@ app.post('/queue', bodyParser.text(), (req: Request, res: Response) => {
     // Query persistence for existing response
     entryOrNull(memoryDatabase, checksumHex).subscribe(result => {
         if (result) {
+            logger.info(JSON.stringify(result.openAIResponse.choices))
             res.send({
                 status: 'exists',
                 id: checksumHex,
@@ -47,6 +48,7 @@ app.post('/queue', bodyParser.text(), (req: Request, res: Response) => {
 })
 
 openai
+readMemoryDatabase(memoryDatabase)
 
 app.listen(config.httpPort, function () {
     logger.info(`HTTP traffic on port ${config.httpPort}`)
