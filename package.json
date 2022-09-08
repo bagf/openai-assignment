@@ -6,6 +6,8 @@
   "license": "MIT",
   "dependencies": {
     "@reactivex/rxjs": "^6.6.7",
+    "crc-32": "https://cdn.sheetjs.com/crc-32-latest/crc-32-latest.tgz",
+    "dotenv": "^16.0.2",
     "express": "^4.18.1",
     "rxjs": "^7.5.6",
     "winston": "^3.8.2"
