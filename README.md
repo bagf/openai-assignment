@@ -62,7 +62,7 @@ POST /queue
 }
 ```
 
-Submitting and stored transcript will return a status of `exists` as well as the generated title text.
+Submitting an existing transcript will return a status of `exists` as well as the generated title text without sending requests to OpenAI.
 
 ```
 POST /queue
