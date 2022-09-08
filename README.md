@@ -25,6 +25,54 @@ yarn test
 yarn dev
 ```
 
+### API
+
+In this projects current release, there are two API endpoints exposed:
+
+#### Query Queue
+
+Will list all queued transcripts. Statuses are:
+
+-   `queued` - Pending submission to OpenAI
+-   `complete` - Submission to OpenAI successful
+-   `error` - Error occured during submission to OpenAI
+
+```
+GET /queue
+{
+	"queue": [
+		{
+			"status": "queued",
+			"crc32": "35458902"
+		}
+	]
+}
+```
+
+#### Post Transcript
+
+Submit transcript text to be processed, will respond with a unique ID string which can be referenced as the CRC32 hash in the queue. For convience, the queue size after being submitted is also returned.
+
+```
+POST /queue
+{
+	"status": "queued",
+	"id": "b5f1cc4",
+	"queueSize": 1
+}
+```
+
+Submitting and stored transcript will return a status of `exists` as well as the generated title text.
+
+```
+POST /queue
+{
+	"status": "exists",
+	"id": "35458902",
+	"generatedTitle": "Hello world"
+}
+```
+
 ## Outstanding tasks
 
 -	[ ] Create Dockerfile and Kuberenetes manifests
