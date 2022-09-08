@@ -1,28 +1,28 @@
-import { BehaviorSubject, map } from 'rxjs'
+import { BehaviorSubject, Observable, take } from 'rxjs'
 import winston from './winston'
 
-enum Status {
+export enum Status {
     queued = 'queued', complete = 'complete', error = 'error'
 }
 
-interface QueuedItem {
+export interface QueuedItem {
     status: Status
     crc32: String,
     openAiResponse?: String
 }
 
 const logger = winston('queue')
-const subject = new BehaviorSubject<Array<QueuedItem>>([
-    {
-        status: Status.queued, crc32: "b3b4b1"
-    }
-]);
+const queue = new BehaviorSubject<Array<QueuedItem>>([])
 
-subject.subscribe((queue: Array<QueuedItem>) => {
+queue.subscribe((queue: Array<QueuedItem>) => {
     const queued = queue.filter(item => item.status == Status.queued).length
     const error = queue.filter(item => item.status == Status.error).length
     const complete = queue.filter(item => item.status == Status.complete).length
     logger.info(`Stats [queued/complete/error] ${queued}/${complete}/${error}`)
 })
 
-export default subject
+export function readQueue(queue: Observable<Array<QueuedItem>>): Observable<Array<QueuedItem>> {
+    return queue.pipe(take(1))
+}
+
+export default queue
