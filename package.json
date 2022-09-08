@@ -1,0 +1,27 @@
+{
+  "name": "assignment",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "rory",
+  "license": "MIT",
+  "dependencies": {
+    "@reactivex/rxjs": "^6.6.7",
+    "express": "^4.18.1",
+    "rxjs": "^7.5.6",
+    "winston": "^3.8.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/jest": "^28.0.0",
+    "@types/node": "^18.7.15",
+    "jest": "^28.0.0",
+    "nodemon": "^2.0.19",
+    "ts-jest": "^28.0.8",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.2"
+  },
+  "scripts": {
+    "dev": "nodemon src/app.ts",
+    "test": "jest"
+  }
+}
