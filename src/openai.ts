@@ -15,7 +15,7 @@ const stream = outgoingQueue.pipe(
     filter(item => item.status == Status.queued && !!item.payload),
     throttleTime(config.openAiThrottleTime))
 
-logger.info(`Subscribing to queue ${config.openAiSecret}`)
+logger.info('Subscribing to queue')
 
 const sub = stream.subscribe(async ({ payload, crc32 }) => {
     logger.info('Sending createCompletion request')
